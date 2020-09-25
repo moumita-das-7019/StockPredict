@@ -1,15 +1,26 @@
-#Install required softwares
-
-sudo yum install python36 git -y
-
-pip install streamlit
-
-sudo pip install --upgrade pip
+On google deep learning image instance to setup environment:
+-----------------------------------------------------------
 
 git clone https://github.com/moumita-das-7019/StockPredict.git
 
 cd StockPredict
 
-python36 -m pip install -r requirements.txt --user
+pip install streamlit
+
+python3 -m pip install -r requirements.txt --user
 
 streamlit run StockPredict.py
+
+
+cat requirements.txt
+### These are the Libraries needed to run the app ###
+joblib
+pandas
+numpy
+sklearn
+streamlit
+Pillow
+scipy
+keras
+matplotlib
+
