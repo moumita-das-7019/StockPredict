@@ -11,7 +11,7 @@ jsonResponse = response.json()
 #Making panda dataframe
 
 df = pd.DataFrame(jsonResponse['data']) 
-df = df[['name', 'symbol']]
-df.sort_values(by='name', ascending=1, inplace=True)
+df = df[['symbol', 'name']]
+df.sort_values(by='symbol', ascending=1, inplace=True)
 df.to_csv('/home/moumita_das2820/StockPredict/data/ticker.csv',index=False)
 
