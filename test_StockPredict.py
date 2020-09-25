@@ -43,6 +43,9 @@ def PredictStock(stock, UserDate):
     dataset = data.values
     #Get /Compute the number of rows to train the model on
     training_data_len = math.ceil( len(dataset) *.8) 
+    #Scale the all of the data to be values between 0 and 1 
+    scaler = MinMaxScaler(feature_range=(0, 1)) 
+    scaled_data = scaler.fit_transform(dataset)
     #Test data set
     test_data = scaled_data[training_data_len - 60: , : ]
     #Create the x_test and y_test data sets
@@ -66,7 +69,7 @@ def PredictStock(stock, UserDate):
 
     #Calculate value for given date
     today = date.today()
-    PreviousDate = datetime.date.today() - (userDate - today)
+    PreviousDate = datetime.date.today() - (UserDate - today)
     #Function to calculate prediction and close value of today, previous data
     def PredValues(date):
             date1 = date.strftime("%Y-%m-%d")
