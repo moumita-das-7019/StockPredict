@@ -1,5 +1,5 @@
 import time
-
+import os
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import requests
@@ -12,10 +12,12 @@ from sklearn.preprocessing import MinMaxScaler
 from keras.models import Sequential
 from keras.layers import Dense, LSTM
 
+AllCsv = os.listdir('/home/moumita_das2820/StockPredict/data')
+AllCsv1 = [ s[:-4] for s in AllCsv]
 
 def createModel(stock):
     new = pd.read_csv('/home/moumita_das2820/StockPredict/data/'+stock+'.csv')
-    #Create a new dataframe with only the 'Close' column
+    # Create a new dataframe with only the 'Close' column
     data = new.filter(['close'])
     #Converting the dataframe to a numpy array
     dataset = data.values
@@ -46,11 +48,21 @@ def createModel(stock):
     model.compile(optimizer='adam', loss='mean_squared_error')
     #Train the model
     model.fit(x_train, y_train, batch_size=2, epochs=20)
-    model.save('/home/moumita_das2820/StockPredict/data/'+stock+'_model')
+    model.save('/home/moumita_das2820/StockPredict/models/'+stock+'_model')
 
 tickers = pd.read_csv('/home/moumita_das2820/StockPredict/data/ticker.csv')
+data = os.listdir('/home/moumita_das2820/StockPredict/models')
+data1 = [s[:-6] for s in data]
+
+tickers = tickers.set_index("symbol")
+tickers = tickers.drop(data1, axis=0)
+new_tickers = tickers.reset_index()
+new_tickers.to_csv("/home/moumita_das2820/StockPredict/data/Newtickers.csv")
+
+newTickers = pd.read_csv("/home/moumita_das2820/StockPredict/data/Newtickers.csv")
 #Save each model
-for stock in tickers['symbol']:
+for stock in newTickers['symbol']:
     print(stock)
-    createModel(stock)
+    if stock in AllCsv1:
+        createModel(stock)
 

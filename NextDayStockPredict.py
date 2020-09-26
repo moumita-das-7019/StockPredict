@@ -1,19 +1,21 @@
 import streamlit as st
-import pandas as pd
 import os
 from PIL import Image
-import datetime
 import numpy as np # linear algebra
+import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import requests
 import json
 import math
+import pickle
+import joblib
 import keras
-from datetime import date
+import datetime
+from requests.exceptions import HTTPError
 from sklearn.preprocessing import MinMaxScaler
-
 from keras.models import Sequential
 from keras.layers import Dense, LSTM
-
+#from datetime import datetime
+from datetime import date
 # Creating the Titles and Image
 st.title("Indian Stock Market Prediction")
 st.header("Finding a probable stock price using Machine Learning")
@@ -29,12 +31,11 @@ option = st.selectbox('Which Stock do you like best?',df['symbol'])
 UserDate=st.date_input('Please choose a date within next 30 days:', datetime.date(2020, 10, 1))
 'You have chosen: ', UserDate
 
-
 #Choose model for prediction
 
-def PredictStock(stock, UserDate):
+def PredictStock(stock):
     #Load model
-    model = keras.models.load_model('/home/moumita_das2820/StockPredict/data/'+stock+'_model')
+    model = keras.models.load_model('/home/moumita_das2820/StockPredict/models/'+stock+'_model')
     #Load datafile
     df1 = pd.read_csv('/home/moumita_das2820/StockPredict/data/'+stock+'.csv')
    #Create a new dataframe with only the 'Close' column
@@ -66,52 +67,12 @@ def PredictStock(stock, UserDate):
     train = data[:training_data_len]
     valid = data[training_data_len:]
     valid['Predictions'] = predictions
-
-    #Calculate value for given date
-    today = date.today()
-    PreviousDate = datetime.date.today() - (UserDate - today)
-    #Function to calculate prediction and close value of today, previous data
-    def PredValues(date):
-            date1 = date.strftime("%Y-%m-%d")
-            while date1 not in valid.index:
-                  date = date - datetime.timedelta(days=1)
-                  date1 = date.strftime("%Y-%m-%d")
-            if date1 in valid.index:
-                   datePrediction = valid._get_value(date1, 'Predictions')
-                   dateClose = valid._get_value(date1, 'close')
-            dateValues = [ datePrediction, dateClose ]
-            return dateValues
-    TodayValues = PredValues(today)
-    PastValues = PredValues(PreviousDate)
-    difference = []
-    zip_object = zip(TodayValues, PastValues)
-    for list1_i, list2_i in zip_object:
-            difference.append(list1_i-list2_i)
-    FutureValues = []
-    zip_object = zip(TodayValues, difference)
-    for list1_i, list2_i in zip_object:
-            FutureValues.append(list1_i+list2_i)
-
-    FutureValues = []
-    zip_object = zip(TodayValues, difference)
-    for list1_i, list2_i in zip_object:
-        FutureValues.append(list1_i+list2_i)
-    return FutureValues
+    return valid
 
 
 #Call funnction to predict values with user input
-FutureValues = PredictStock(option, UserDate)
-"The closing price based on AI prediction is", FutureValues[0], "and based on past closing values is",FutureValues[1], "."
-'''
-imaginary_stock = {
-    "23-09-2020" : "56",
-    "24-09-2020" : "60",
-    "25-09-2020" : "100"
-    }
-if UserDate in imaginary_stock:
-        stockValue = imaginary_stock[UserDate]
-        st.write("Predicted stock price for", UserDate, " is ", stockValue)
-'''
-st.write("""
-Please note: Stock market is unpredictable, and these data is only for reference. Please use your decision making when looking to invest.
-""")
+FutureValues = PredictStock(option)
+FutureValues
+#"The closing price based on AI prediction is:", FutureValues[0], "and based on past closing values is:",FutureValues[1], "."
+"Please note: Stock market is unpredictable, and these data is only for reference. Please use your decision making when looking to invest."
+
