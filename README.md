@@ -1,14 +1,17 @@
-﻿#**
+﻿
+# README.md
 
-## README.md
-
-**
 Stock Market Prediction Application
-
 
 # About the project
 
 This is a project to predict stock market closing price for future dates with LSTM model as its backbone.
+
+## Document Version
+
+| Version |Remarks  |
+|--|--|
+| 1.0 | First draft, documentation under development  |
 
 
 ## Software dependencies
@@ -29,144 +32,297 @@ This comes with default infra monitoring setup, tools installed liked tensorflow
 
 6. Panda: As data analysis and manipulation tool.
 
+## Dataset 
+Python scripts will be downloading json data from https://marketstack.com for individual stocks and convert them into useful panda dataset.
+Storing format is .csv.
+This website has data of 100+ Indian stocks accessible through APIs, but downside is with the free account, you shall get only data of 1 year.
+
 ## How to set up environment
 
+On google deep learning image instance to setup environment:
+1.Clone the repository.
+> $git clone https://github.com/moumita-das-7019/StockPredict.git
 
 
-## Directory contains
+2.Install required tools and libraries.
+> $cd StockPredict 
+> $pip install streamlit $python3 -m pip install -r requirements.txt --user #Installs  other library requirements
 
-You can rename the current file by clicking the file name in the navigation bar or by clicking the **Rename** button in the file explorer.
+3.Setup API key to get data.
 
-## How it works
+a) Login to https://marketstack.com and create free account
+b)Store your API key for later use
+c)Rename scripts/demosecret.py as secret.py and change "APIKeyValue" with your API key,
 
-1. On 1st of month, it gets all ticker data from the website is csv format.
-2.  Every day it gets all the previous stock data for each stock mentioned in ticker.csv file and saves it in  It will not create csv files if data is missing for any stock.
-3. On 1st, and 16th of month, the models for each stock get trained with new data which is a time consuming task. Each model creation takes approximately 15 minutes.
+> def access_key():
+>         return 'APIKeyValue'
 
-    moumita_das2820@webhost:~$ cd StockPredict/scripts/
-    moumita_das2820@webhost:~/StockPredict/scripts$ exec python3 CreateModel.py 
+This file is added to .gitignore file so that your API key is kept secret.
 
+4.Create dataset.
+> $python3 scripts/ticker.py  #To get all tickers of Indian Stock Exchange available  
+> $python3 scripts/SaveData.py #To get all the stock price data of individual stocks 
+> $exec python3 scripts/CreateModel.py #To save all the 
+models of Individual stock.
 We shall use exec so that terminal timeout doesn't cause the script to stop.
-4. 
+
+5.Run application
+
+> $streamlit run StockPredict.py #Run the application and you get url
+> for webbrowser
+
+6.Access it on browser
+
+> http://Exeternal_IP:8501
+
+## Repository content
+
+When writing this document, many of my models are yet to be produced, so model directory has less data than expected.
+
+> $tree
+
+.
+├── data
+│   ├── 3MINDIA.XNSE.csv
+│   ├── ABB.XNSE.csv
+│   ├── ACC.XNSE.csv
+│   ├── ADANIENT.XNSE.csv
+│   ├── ADANIGREEN.XNSE.csv
+│   ├── ADANIPORTS.XNSE.csv
+│   ├── ADANITRANS.XNSE.csv
+│   ├── AMBUJACEM.XNSE.csv
+│   ├── APOLLOHOSP.XNSE.csv
+│   ├── ASIANPAINT.XNSE.csv
+│   ├── AXISBANK.XNSE.csv
+│   ├── BAJAJ_AUTO.XNSE.csv
+│   ├── BAJAJFINSV.XNSE.csv
+│   ├── BAJAJHLDNG.XNSE.csv
+│   ├── BAJFINANCE.XNSE.csv
+│   ├── BANDHANBNK.XNSE.csv
+│   ├── BERGEPAINT.XNSE.csv
+│   ├── BHARTIARTL.XNSE.csv
+│   ├── BOSCHLTD.XNSE.csv
+│   ├── BPCL.XNSE.csv
+│   ├── BRITANNIA.XNSE.csv
+│   ├── CADILAHC.XNSE.csv
+│   ├── CHOLAFIN.XNSE.csv
+│   ├── COALINDIA.XNSE.csv
+│   ├── DABUR.XNSE.csv
+│   ├── DIVISLAB.XNSE.csv
+│   ├── DLF.XNSE.csv
+│   ├── DMART.XNSE.csv
+│   ├── DRREDDY.XNSE.csv
+│   ├── EICHERMOT.XNSE.csv
+│   ├── EMBASSY.RR.XNSE.csv
+│   ├── GAIL.XNSE.csv
+│   ├── GODREJCP.XNSE.csv
+│   ├── GODREJPROP.XNSE.csv
+│   ├── GRASIM.XNSE.csv
+│   ├── GSKCONS.XNSE.csv
+│   ├── HAL.XNSE.csv
+│   ├── HAVELLS.XNSE.csv
+│   ├── HCLTECH.XNSE.csv
+│   ├── HDFCAMC.XNSE.csv
+│   ├── HDFCBANK.XNSE.csv
+│   ├── HDFCLIFE.XNSE.csv
+│   ├── HDFC.XNSE.csv
+│   ├── HEROMOTOCO.XNSE.csv
+│   ├── HINDUNILVR.XNSE.csv
+│   ├── HINDZINC.XNSE.csv
+│   ├── ICICIBANK.XNSE.csv
+│   ├── ICICIGI.XNSE.csv
+│   ├── ICICIPRULI.XNSE.csv
+│   ├── INDIGO.XNSE.csv
+│   ├── INDUSINDBK.XNSE.csv
+│   ├── INFRATEL.XNSE.csv
+│   ├── INFY.XNSE.csv
+│   ├── IOC.XNSE.csv
+│   ├── IRCTC.XNSE.csv
+│   ├── ITC.XNSE.csv
+│   ├── JSWSTEEL.XNSE.csv
+│   ├── KANSAINER.XNSE.csv
+│   ├── KOTAKBANK.XNSE.csv
+│   ├── LT.XNSE.csv
+│   ├── MARICO.XNSE.csv
+│   ├── MARUTI.XNSE.csv
+│   ├── MCDOWELL_N.XNSE.csv
+│   ├── NAM_INDIA.XNSE.csv
+│   ├── NESTLEIND.XNSE.csv
+│   ├── newticker.csv
+│   ├── Newtickers.csv
+│   ├── NHPC.XNSE.csv
+│   ├── NMDC.XNSE.csv
+│   ├── noData
+│   ├── NTPC.XNSE.csv
+│   ├── OFSS.XNSE.csv
+│   ├── ONGC.XNSE.csv
+│   ├── original_ticker.csv
+│   ├── PAGEIND.XNSE.csv
+│   ├── PETRONET.XNSE.csv
+│   ├── PGHH.XNSE.csv
+│   ├── PIDILITIND.XNSE.csv
+│   ├── POWERGRID.XNSE.csv
+│   ├── RECLTD.XNSE.csv
+│   ├── RELIANCE.XNSE.csv
+│   ├── SBILIFE.XNSE.csv
+│   ├── SBIN.XNSE.csv
+│   ├── SHREECEM.XNSE.csv
+│   ├── SIEMENS.XNSE.csv
+│   ├── SRF.XNSE.csv
+│   ├── SRTRANSFIN.XNSE.csv
+│   ├── SUNPHARMA.XNSE.csv
+│   ├── TATAMOTORS.XNSE.csv
+│   ├── TATASTEEL.XNSE.csv
+│   ├── TCS.XNSE.csv
+│   ├── TECHM.XNSE.csv
+│   ├── TextData
+│   ├── ticker.csv
+│   ├── TITAN.XNSE.csv
+│   ├── TORNTPHARM.XNSE.csv
+│   ├── TRENT.XNSE.csv
+│   ├── ULTRACEMCO.XNSE.csv
+│   ├── UPL.XNSE.csv
+│   ├── VBL.XNSE.csv
+│   ├── VEDL.XNSE.csv
+│   ├── VOLTAS.XNSE.csv
+│   ├── WHIRLPOOL.XNSE.csv
+│   ├── WIPRO.XNSE.csv
+│   └── ZEEL.XNSE.csv
+├── models
+│   ├── 3MINDIA.XNSE_model
+│   ├── ABB.XNSE_model
+│   ├── ACC.XNSE_model
+│   ├── ADANIENT.XNSE_model
+│   ├── ADANIGREEN.XNSE_model
+│   ├── ADANIPORTS.XNSE_model
+│   ├── ADANITRANS.XNSE_model
+│   ├── AMBUJACEM.XNSE_model
+│   ├── APOLLOHOSP.XNSE_model
+│   ├── ASIANPAINT.XNSE_model
+│   ├── AXISBANK.XNSE_model
+│   ├── BAJAJ_AUTO.XNSE_model
+│   ├── BAJAJFINSV.XNSE_model
+│   ├── BAJAJHLDNG.XNSE_model
+│   ├── BAJFINANCE.XNSE_model
+│   ├── BANDHANBNK.XNSE_model
+│   ├── BERGEPAINT.XNSE_model
+│   ├── BHARTIARTL.XNSE_model
+│   ├── BOSCHLTD.XNSE_model
+│   ├── BPCL.XNSE_model
+│   ├── BRITANNIA.XNSE_model
+│   ├── CADILAHC.XNSE_model
+│   ├── CHOLAFIN.XNSE_model
+│   ├── COALINDIA.XNSE_model
+│   ├── DABUR.XNSE_model
+│   ├── DIVISLAB.XNSE_model
+│   ├── DLF.XNSE_model
+│   ├── DMART.XNSE_model
+│   ├── DRREDDY.XNSE_model
+│   ├── EICHERMOT.XNSE_model
+│   ├── EMBASSY.RR.XNSE_model
+│   ├── GAIL.XNSE_model
+│   ├── GODREJCP.XNSE_model
+│   ├── GODREJPROP.XNSE_model
+│   ├── GRASIM.XNSE_model
+│   ├── GSKCONS.XNSE_model
+│   ├── HAL.XNSE_model
+│   ├── HAVELLS.XNSE_model
+│   ├── HCLTECH.XNSE_model
+│   ├── HDFCAMC.XNSE_model
+│   ├── HDFCBANK.XNSE_model
+│   ├── HDFCLIFE.XNSE_model
+│   ├── HDFC.XNSE_model
+│   ├── HEROMOTOCO.XNSE_model
+│   ├── HINDUNILVR.XNSE_model
+│   ├── HINDZINC.XNSE_model
+│   ├── ICICIBANK.XNSE_model
+│   ├── ICICIGI.XNSE_model
+│   ├── ICICIPRULI.XNSE_model
+│   ├── INDIGO.XNSE_model
+│   ├── INDUSINDBK.XNSE_model
+│   ├── INFRATEL.XNSE_model
+│   ├── INFY.XNSE_model
+│   ├── IOC.XNSE_model
+│   ├── IRCTC.XNSE_model
+│   ├── ITC.XNSE_model
+│   ├── JSWSTEEL.XNSE_model
+│   ├── KANSAINER.XNSE_model
+│   ├── KOTAKBANK.XNSE_model
+│   ├── LT.XNSE_model
+│   ├── MARICO.XNSE_model
+│   ├── MARUTI.XNSE_model
+│   ├── MCDOWELL_N.XNSE_model
+│   ├── NAM_INDIA.XNSE_model
+│   ├── NESTLEIND.XNSE_model
+│   ├── NHPC.XNSE_model
+│   ├── NMDC.XNSE_model
+│   ├── NTPC.XNSE_model
+│   ├── OFSS.XNSE_model
+│   ├── ONGC.XNSE_model
+│   ├── PAGEIND.XNSE_model
+│   ├── PETRONET.XNSE_model
+│   ├── PGHH.XNSE_model
+│   ├── PIDILITIND.XNSE_model
+│   ├── POWERGRID.XNSE_model
+│   ├── RECLTD.XNSE_model
+│   ├── RELIANCE.XNSE_model
+│   ├── SBILIFE.XNSE_model
+│   ├── SBIN.XNSE_model
+│   ├── SHREECEM.XNSE_model
+│   ├── SIEMENS.XNSE_model
+│   ├── SRF.XNSE_model
+│   ├── SRTRANSFIN.XNSE_model
+│   ├── SUNPHARMA.XNSE_model
+│   ├── TATAMOTORS.XNSE_model
+│   ├── TATASTEEL.XNSE_model
+│   ├── TCS.XNSE_model
+│   └── TECHM.XNSE_model
+├── NextDayStockPredict.py
+├── __pycache__
+│   └── secret.cpython-37.pyc
+├── README.md
+├── requirements.txt
+├── scripts
+│   ├── CreateModel.py
+│   ├── demosecret.py
+│   ├── __pycache__
+│   │   └── secret.cpython-37.pyc
+│   ├── SaveData.py
+│   ├── secret.py
+│   └── ticker.py
+├── StockMarket.jpg
+├── Stock Market Prediction Application User Guide.pdf
+├── Test
+│   ├── myStockPredict.py
+│   ├── newStockPredict.py
+│   ├── StockPredict.py
+│   ├── TCSModel.py
+│   └── test_StockPredict.py
+└── test.py
+
+6 directories, 211 files
 
 
+## How does the application work?
+
+1. On 1st of month, cronjob configured on device gets all ticker data from the website is csv format.
+2.  Every day another cronjob gets all the previous stock data for each stock mentioned in ticker.csv file and saves it as csv file after formatting them to panda data frame.
+It will not create csv files if data is missing for any stock.
+3. On 1st, and 16th of month, the models for each stock get trained with new data which is a time consuming task. Each model creation takes approximately 10 minutes to save.
+4. When User selects a date and stock same on the web browser, the streamlit application NextDayStockPredict.py reloads relative model as per the stock and predict the data.
 
 
+## Architecture
 
-# Architecture
 
-Synchronization is one of the biggest features of StackEdit. It enables you to synchronize any file in your workspace with other files stored in your **Google Drive**, your **Dropbox** and your **GitHub** accounts. This allows you to keep writing on other devices, collaborate with people you share the file with, integrate easily into your workflow... The synchronization mechanism takes place every minute in the background, downloading, merging, and uploading file modifications.
-
-There are two types of synchronization and they can complement each other:
-
-- The workspace synchronization will sync all your files, folders and settings automatically. This will allow you to fetch your workspace on any other device.
-	> To start syncing your workspace, just sign in with Google in the menu.
-
-- The file synchronization will keep one file of the workspace synced with one or multiple files in **Google Drive**, **Dropbox** or **GitHub**.
-	> Before starting to sync files, you must link an account in the **Synchronize** sub-menu.
 
 ## Monitoring
 
-You can export the current file by clicking **Export to disk** in the menu. You can choose to export the file as plain Markdown, as HTML using a Handlebars template or as a PDF.
+
 
 ## Notes
 
-You can open a file from **Google Drive**, **Dropbox** or **GitHub** by opening the **Synchronize** sub-menu and clicking **Open from**. Once opened in the workspace, any modification in the file will be automatically synced.
-
-## Save a file
-
-You can save any file of the workspace to **Google Drive**, **Dropbox** or **GitHub** by opening the **Synchronize** sub-menu and clicking **Save on**. Even if a file in the workspace is already synced, you can save it to another location. StackEdit can sync one file with multiple locations and accounts.
-
-## Synchronize a file
-
-Once your file is linked to a synchronized location, StackEdit will periodically synchronize it by downloading/uploading any modification. A merge will be performed if necessary and conflicts will be resolved.
-
-If you just have modified your file and you want to force syncing, click the **Synchronize now** button in the navigation bar.
-
-> **Note:** The **Synchronize now** button is disabled if you have no file to synchronize.
-
-## Manage file synchronization
-
-Since one file can be synced with multiple locations, you can list and manage synchronized locations by clicking **File synchronization** in the **Synchronize** sub-menu. This allows you to list and remove synchronized locations that are linked to your file.
+Please read  **Stock Market Prediction Application User Guide.pdf**
+for further information.
 
 
-# Publication
-
-Publishing in StackEdit makes it simple for you to publish online your files. Once you're happy with a file, you can publish it to different hosting platforms like **Blogger**, **Dropbox**, **Gist**, **GitHub**, **Google Drive**, **WordPress** and **Zendesk**. With [Handlebars templates](http://handlebarsjs.com/), you have full control over what you export.
-
-> Before starting to publish, you must link an account in the **Publish** sub-menu.
-
-## Publish a File
-
-You can publish your file by opening the **Publish** sub-menu and by clicking **Publish to**. For some locations, you can choose between the following formats:
-
-- Markdown: publish the Markdown text on a website that can interpret it (**GitHub** for instance),
-- HTML: publish the file converted to HTML via a Handlebars template (on a blog for example).
-
-## Update a publication
-
-After publishing, StackEdit keeps your file linked to that publication which makes it easy for you to re-publish it. Once you have modified your file and you want to update your publication, click on the **Publish now** button in the navigation bar.
-
-> **Note:** The **Publish now** button is disabled if your file has not been published yet.
-
-## Manage file publication
-
-Since one file can be published to multiple locations, you can list and manage publish locations by clicking **File publication** in the **Publish** sub-menu. This allows you to list and remove publication locations that are linked to your file.
-
-
-# Markdown extensions
-
-StackEdit extends the standard Markdown syntax by adding extra **Markdown extensions**, providing you with some nice features.
-
-> **ProTip:** You can disable any **Markdown extension** in the **File properties** dialog.
-
-
-## SmartyPants
-
-SmartyPants converts ASCII punctuation characters into "smart" typographic punctuation HTML entities. For example:
-
-|                |ASCII                          |HTML                         |
-|----------------|-------------------------------|-----------------------------|
-|Single backticks|`'Isn't this fun?'`            |'Isn't this fun?'            |
-|Quotes          |`"Isn't this fun?"`            |"Isn't this fun?"            |
-|Dashes          |`-- is en-dash, --- is em-dash`|-- is en-dash, --- is em-dash|
-
-
-## KaTeX
-
-You can render LaTeX mathematical expressions using [KaTeX](https://khan.github.io/KaTeX/):
-
-The *Gamma function* satisfying $\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$ is via the Euler integral
-
-$$
-\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.
-$$
-
-> You can find more information about **LaTeX** mathematical expressions [here](http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference).
-
-
-## UML diagrams
-
-You can render UML diagrams using [Mermaid](https://mermaidjs.github.io/). For example, this will produce a sequence diagram:
-
-```mermaid
-sequenceDiagram
-Alice ->> Bob: Hello Bob, how are you?
-Bob-->>John: How about you John?
-Bob--x Alice: I am good thanks!
-Bob-x John: I am good thanks!
-Note right of John: Bob thinks a long<br/>long time, so long<br/>that the text does<br/>not fit on a row.
-
-Bob-->Alice: Checking with John...
-Alice->John: Yes... John, how are you?
-```
-
-And this will produce a flow chart:
-
-```mermaid
-graph LR
-A[Square Rect] -- Link text --> B((Circle))
-A --> C(Round Rect)
-B --> D{Rhombus}
-C --> D
-```
