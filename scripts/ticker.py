@@ -4,9 +4,13 @@
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import requests
 import json
-
+from secret import *
+#Getting variables
+access_key=access_key()
+url='http://api.marketstack.com/v1/tickers?access_key='+access_key+'&exchange=XNSE'
 #Gathering data from API
-response = requests.get('http://api.marketstack.com/v1/tickers?access_key=7a247f5ee1c585714c83b74587866efb&exchange=XNSE')
+#response = requests.get('http://api.marketstack.com/v1/tickers?access_key=7a247f5ee1c585714c83b74587866efb&exchange=XNSE')
+response = requests.get(url)
 jsonResponse = response.json()
 #Making panda dataframe
 

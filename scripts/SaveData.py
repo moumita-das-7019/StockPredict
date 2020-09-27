@@ -5,14 +5,13 @@ import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import requests
 import json
 import time
-
+from secret import *
 #Gater ticker informations
 tickers = pd.read_csv('/home/moumita_das2820/StockPredict/data/ticker.csv')
 noData = []
 #Function to save stock closing data
-
+access_key=access_key()
 def StockDataSaver(stock):
-            access_key='7a247f5ee1c585714c83b74587866efb'
             url='http://api.marketstack.com/v1/eod?access_key='+access_key+ '&symbols=' + stock +'&%20date_from=2000-01-01&limit=1000'
             response = requests.get(url)
             jsonResponse = response.json()
