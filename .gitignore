@@ -1,1 +1,4 @@
 Test/
+scripts/secret.py
+__pycache__/
+scripts/__pycache__/
