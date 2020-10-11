@@ -28,8 +28,8 @@ df = pd.read_csv("/home/moumita_das2820/StockPredict/data/ticker.csv")
 df
 option = st.selectbox('Which Stock do you like best?',df['symbol'])
 'You selected: ', option
-#UserDate=st.date_input('Please choose a date within next 30 days:', datetime.date(2020, 10, 1))
-#'You have chosen: ', UserDate
+UserDate=st.date_input('Please choose a date within next 30 days:', datetime.date(2020, 10, 1))
+'You have chosen: ', UserDate
 
 #Choose model for prediction
 
@@ -67,16 +67,12 @@ def PredictStock(stock):
     train = data[:training_data_len]
     valid = data[training_data_len:]
     valid['Predictions'] = predictions
-    valid['Date'] = df1['date']
-    valid = valid.set_index('Date')
     return valid
 
 
 #Call funnction to predict values with user input
 FutureValues = PredictStock(option)
-TodayValue = FutureValues["Predictions"].iloc[-1]
-"The closing price based on AI prediction today is:", TodayValue, "."
-"Here is the actual closing price and AI Predicted closing value of this stock for your comparison of last 60 days:"
 FutureValues
+#"The closing price based on AI prediction is:", FutureValues[0], "and based on past closing values is:",FutureValues[1], "."
 "Please note: Stock market is unpredictable, and these data is only for reference. Please use your decision making when looking to invest."
 

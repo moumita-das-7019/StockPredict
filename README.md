@@ -5,14 +5,14 @@ Stock Market Prediction Application
 
 # About the project
 
-This is a project to predict stock market closing price for future dates with LSTM model as its backbone.
+This is a project to predict stock market closing price for next date with LSTM model as its backbone.
 
 ## Document Version
 
 | Version |Remarks  |
 |--|--|
 | 1.0 | First draft, documentation under development  |
-
+| 1.1 | 2nd draft, documentation completed  |
 
 ## Software dependencies
 
@@ -309,16 +309,26 @@ When writing this document, many of my models are yet to be produced, so model d
 2.  Every day another cronjob gets all the previous stock data for each stock mentioned in ticker.csv file and saves it as csv file after formatting them to panda data frame.
 It will not create csv files if data is missing for any stock.
 3. On 1st, and 16th of month, the models for each stock get trained with new data which is a time consuming task. Each model creation takes approximately 10 minutes to save.
-4. When User selects a date and stock same on the web browser, the streamlit application NextDayStockPredict.py reloads relative model as per the stock and predict the data.
-
-
-## Architecture
-
+4. When User selects a stock name  on the web browser, the streamlit application NextDayStockPredict.py reloads relative model as per the stock and predict the data.
 
 
 ## Monitoring
+The application is running on google cloud instance, it has default infrastructure monitoring like CPU, memory, disks etc.
 
 
+## Known Issue
+
+1)The machine is hung sometimes while creating model with error like:
+
+> VEDL.XNSE
+Epoch 1/20
+140/140 [==============================] - 22s 156ms/step - loss: 0.0336
+Epoch 2/20
+140/140 [==============================] - 34s 242ms/step - loss: 0.0078
+Epoch 3/20
+ 16/140 [==>...........................] - ETA: 9:24 - loss: 0.0048    
+
+Resolution is to start a new ssh session or restart the machine if new ssh session is not being connected.
 
 ## Notes
 
